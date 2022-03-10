@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {TestService} from "./service/test.service";
 
 @Component({
   selector: 'app-root',
@@ -9,15 +10,17 @@ import {HttpClient} from "@angular/common/http";
 export class AppComponent {
   title = 'aws-angular-learning';
 
-  test = "";
+  textTest = "Text";
 
-  constructor(private http: HttpClient) { }
+  constructor(private testService: TestService) { }
 
   ngOnInit() {
-    // Simple GET request with response type <any>
-    this.http.get<any>('https://duartesomsen-backend.com/hello').subscribe(data => {
-      this.test = data;
-    })
+    this.testService.retrieveText().subscribe(
+      response => {
+        console.log(response);
+        this.textTest = response;
+      }
+    );
   }
 
 }
